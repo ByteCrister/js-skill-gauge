@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -223,8 +223,8 @@ export default function Landing() {
     };
   }, [hasStarted, sessionInvalidated, timerExpired, autoSubmitted]);
 
-  const submitAssessment = async (
-    answersToUse: AnswerMap,
+  const submitAssessment = useCallback(async (
+    _answersToUse: AnswerMap,
     durationsToUse: Record<number, number>,
   ) => {
     if (isSubmitting || sessionInvalidated) return;
@@ -276,7 +276,7 @@ export default function Landing() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [isSubmitting, quizQuestions, sessionInvalidated, yearsExperience]);
 
   const handleSubmit = async () => {
     if (!allAnswered || yearsExperience === "" || sessionInvalidated) return;
@@ -345,14 +345,14 @@ export default function Landing() {
               <div className="flex items-center gap-4">
                 <div className="relative">
                   <div className="absolute inset-0 animate-pulse rounded-2xl bg-[#f0db4f]/20 blur-xl" />
-                  <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#f0db4f] to-[#f0db4f]/80 shadow-lg">
+                  <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-linear-to-br from-[#f0db4f] to-[#f0db4f]/80 shadow-lg">
                     <FaJsSquare className="h-10 w-10 text-[#323330]" />
                   </div>
                 </div>
 
                 <div>
                   <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
-                    <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                    <span className="bg-linear-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                       Js SkillGauge
                     </span>
                   </h1>
@@ -839,7 +839,7 @@ export default function Landing() {
             <div className="space-y-6 py-4">
               {/* Score Overview */}
               <div className="grid gap-4 md:grid-cols-2">
-                <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+                <Card className="border-primary/20 bg-linear-to-br from-primary/5 to-transparent">
                   <CardHeader>
                     <CardTitle className="text-sm font-medium text-muted-foreground">
                       Quiz Score
@@ -863,7 +863,7 @@ export default function Landing() {
                   </CardContent>
                 </Card>
 
-                <Card className="border-secondary/20 bg-gradient-to-br from-secondary/5 to-transparent">
+                <Card className="border-secondary/20 bg-linear-to-br from-secondary/5 to-transparent">
                   <CardHeader>
                     <CardTitle className="text-sm font-medium text-muted-foreground">
                       AI Prediction
