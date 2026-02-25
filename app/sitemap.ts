@@ -3,7 +3,7 @@ import { MetadataRoute } from "next";
 export default function sitemap(): MetadataRoute.Sitemap {
     const domain =
         process.env.NEXT_PUBLIC_DOMAIN?.replace(/\/$/, "") ||
-        "https://bd-travel-spirit-support-system.vercel.app";
+        "https://js-skill-gauge.vercel.app";
 
     const routes = [
         { path: "/", priority: 1.0 },
