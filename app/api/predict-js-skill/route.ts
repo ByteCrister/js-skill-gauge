@@ -3,6 +3,7 @@ import type { DifficultyType } from "../../../data/question";
 
 // Import the JS model exported from Python
 import { score as rfScore } from "../../../machine-learning/js-skill-rf-model";
+import { ModelInputVector } from "@/machine-learning/js-skill-rf-model";
 
 // Label map from Python LabelEncoder
 export type SkillLevel = "Beginner" | "Basic" | "Intermediate" | "Advanced" | "Expert";
@@ -48,13 +49,16 @@ export async function POST(req: NextRequest): Promise<NextResponse<PredictRespon
             times.reduce((sum, t, i) => sum + t * difficulties[i], 0) /
             (difficulties.reduce((a, b) => a + b, 0) + 1e-6);
 
-        const features: number[] = [
+        const selfRating = 2; // or average from dataset
+
+        const features = [
             body.YearsExperience,
+            selfRating,
             ...difficulties,
             ...times,
             avgTime,
             weightedTime,
-        ];
+        ] as ModelInputVector;
 
         // rfScore returns a probability vector like [p0, p1].
         // We take the index of the highest probability and map it to a label.

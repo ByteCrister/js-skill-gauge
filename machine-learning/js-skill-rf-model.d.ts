@@ -25,7 +25,14 @@ export type ModelInputVector = [
   number  // WeightedTime
 ];
 
-export type ModelScoreOutput = [number, number];
+export type ModelInputVector = [
+  number, number,
+  number, number, number, number, number,
+  number, number, number, number, number,
+  number, number, number, number, number,
+  number, number, number, number, number,
+  number, number
+];
 
 export function score(input: ModelInputVector): ModelScoreOutput;
 
